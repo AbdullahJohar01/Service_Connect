@@ -1,0 +1,129 @@
+<section class="booking-page">
+  <div class="container">
+
+    <div class="booking-header">
+      <p class="page-label">Book a Service</p>
+
+      <h1>
+        Book <%= @provider.business_name %>
+      </h1>
+
+      <p>
+        Select a service, choose your preferred time, and provide
+        the necessary details.
+      </p>
+    </div>
+
+    <div class="booking-form-card">
+
+      <%= form_with model: @booking,
+                    url: bookings_path(provider_id: @provider.id),
+                    method: :post,
+                    local: true do |form| %>
+
+        <% if @booking.errors.any? %>
+          <div class="form-errors">
+            <h3>
+              <%= pluralize(@booking.errors.count, "error") %>
+              prevented this booking from being created:
+            </h3>
+
+            <ul>
+              <% @booking.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= form.label :service_category_id, "Service" %>
+
+          <%= form.collection_select(
+                :service_category_id,
+                @provider_services,
+                :service_category_id,
+                :service_category_name,
+                { prompt: "Select a service" },
+                {
+                  id: "booking_service_category_id"
+                }
+              ) %>
+        </div>
+
+        <div class="form-row">
+
+          <div class="form-group">
+            <%= form.label :estimated_duration,
+                           "Estimated Duration (minutes)" %>
+
+            <%= form.number_field :estimated_duration,
+                                  id: "booking_estimated_duration",
+                                  min: 1,
+                                  required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :estimated_price,
+                           "Estimated Price" %>
+
+            <%= form.number_field :estimated_price,
+                                  id: "booking_estimated_price",
+                                  min: 0,
+                                  step: 0.01,
+                                  required: true %>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <%= form.label :address_id, "Address" %>
+
+          <%= form.collection_select(
+                :address_id,
+                @addresses,
+                :id,
+                ->(address) {
+                  [
+                    address.label,
+                    address.street,
+                    address.city,
+                    address.postal_code
+                  ].compact.join(", ")
+                },
+                { prompt: "Select an address" }
+              ) %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :scheduled_at, "Scheduled Date & Time" %>
+
+          <%= form.datetime_local_field :scheduled_at,
+                                        required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :customer_description,
+                         "Describe the Service You Need" %>
+
+          <%= form.text_area :customer_description,
+                             rows: 5,
+                             required: true,
+                             placeholder: "Tell the provider what you need..." %>
+        </div>
+
+        <div class="booking-form-actions">
+          <%= link_to "Cancel",
+                      provider_path(@provider),
+                      class: "text-link" %>
+
+          <%= form.submit "Create Booking",
+                          class: "provider-button" %>
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</section>
