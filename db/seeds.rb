@@ -70,9 +70,7 @@ customers = 5.times.map do |index|
   user
 end
 
-# ------------------------------------------------------------
 # Preserve the real Abdullah account
-# ------------------------------------------------------------
 
 abdullah = User.find_by(email: "abdullah@example.com")
 

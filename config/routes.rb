@@ -5,9 +5,7 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
-  # ============================================================
   # WEB APPLICATION
-  # ============================================================
 
   # Home
   root "home#index"
@@ -162,9 +160,8 @@ Rails.application.routes.draw do
           as: :reactivate_user
   end
 
-  # ============================================================
+
   # API V1
-  # ============================================================
 
 
   # Authentication API
