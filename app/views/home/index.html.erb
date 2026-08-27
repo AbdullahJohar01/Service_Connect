@@ -2,24 +2,21 @@
   <section class="home-hero">
     <div class="home-container">
       <div class="home-hero-content">
-        <span class="home-eyebrow">Trusted home services</span>
-
         <h1>Find trusted service professionals for your home.</h1>
 
         <p>
-          Connect with reliable local experts, compare your options, and book
-          quality home services through one simple platform.
+          Browse service categories, explore providers, and book the help you
+          need through Service Connect.
         </p>
 
         <div class="home-hero-actions">
-          <%= link_to "Find a Service", "#services", class: "home-primary-button" %>
-          <%= link_to "Browse Providers", providers_path, class: "home-secondary-button" %>
-        </div>
+          <%= link_to "Find a Service",
+                      "#services",
+                      class: "home-primary-button" %>
 
-        <div class="home-trust-points">
-          <span>✓ Verified providers</span>
-          <span>✓ Easy booking</span>
-          <span>✓ Transparent PKR pricing</span>
+          <%= link_to "Browse Providers",
+                      providers_path,
+                      class: "home-secondary-button" %>
         </div>
       </div>
     </div>
@@ -28,10 +25,10 @@
   <section class="home-section home-services" id="services">
     <div class="home-container">
       <div class="home-section-heading">
-        <span class="home-eyebrow">What we offer</span>
-        <h2>Explore our services</h2>
+        <h2>Services</h2>
+
         <p>
-          Choose a category and discover professionals who can handle the job.
+          Choose a service category to find professionals who can help.
         </p>
       </div>
 
@@ -49,24 +46,28 @@
 
             <%= link_to providers_path(service_category_id: category.id),
                         class: "home-service-card" do %>
-              <div class="home-service-icon"><%= icon %></div>
+              <div class="home-service-icon">
+                <%= icon %>
+              </div>
 
               <div>
                 <h3><%= category.name %></h3>
+
                 <p>
                   <%= category.description.presence ||
-                      "Find trusted professionals for #{category.name.downcase} services." %>
+                      "Find professionals for #{category.name.downcase} services." %>
                 </p>
               </div>
-
-              <span class="home-card-arrow">→</span>
             <% end %>
           <% end %>
         </div>
       <% else %>
         <div class="home-empty-state">
           <h3>No services available yet</h3>
-          <p>Service categories will appear here when they become available.</p>
+
+          <p>
+            Service categories will appear here when they become available.
+          </p>
         </div>
       <% end %>
     </div>
@@ -76,136 +77,122 @@
     <div class="home-container">
       <div class="home-section-heading home-section-heading-row">
         <div>
-          <span class="home-eyebrow">Meet the professionals</span>
-          <h2>Featured providers</h2>
-          <p>Explore experienced professionals available through Service Connect.</p>
+          <h2>Featured Providers</h2>
+
+          <p>
+            Explore service providers available through Service Connect.
+          </p>
         </div>
 
-        <%= link_to "View all providers", providers_path, class: "home-text-link" %>
+        <%= link_to "View All Providers",
+                    providers_path,
+                    class: "home-text-link" %>
       </div>
 
-      <div class="home-provider-grid">
-        <%= link_to provider_path(1), class: "home-provider-card" do %>
-          <div class="home-provider-avatar">A</div>
-          <div class="home-provider-content">
-            <div class="home-rating">★ 4.88</div>
-            <h3>Ali Electrical Services</h3>
-            <p>Electrical installation and repair</p>
-            <div class="home-provider-meta">
-              <span>6 years experience</span>
-              <strong>PKR 1,800/hr</strong>
-            </div>
-          </div>
-        <% end %>
+      <% if @featured_providers.any? %>
+        <div class="home-provider-grid">
+          <% @featured_providers.each do |provider| %>
+            <% service = provider.provider_services.find(&:active?) %>
 
-        <%= link_to provider_path(2), class: "home-provider-card" do %>
-          <div class="home-provider-avatar">D</div>
-          <div class="home-provider-content">
-            <div class="home-rating">★ 5.0</div>
-            <h3>Danish Electrical Services</h3>
-            <p>Professional electrical services</p>
-            <div class="home-provider-meta">
-              <span>5 years experience</span>
-              <strong>PKR 1,700/hr</strong>
-            </div>
-          </div>
-        <% end %>
+            <%= link_to provider_path(provider),
+                        class: "home-provider-card" do %>
 
-        <%= link_to provider_path(6), class: "home-provider-card" do %>
-          <div class="home-provider-avatar">A</div>
-          <div class="home-provider-content">
-            <div class="home-rating">New provider</div>
-            <h3>Ahmed Plumbing Services</h3>
-            <p>Plumbing and water supply services</p>
-            <div class="home-provider-meta">
-              <span>6 years experience</span>
-              <strong>PKR 1,600/hr</strong>
-            </div>
-          </div>
-        <% end %>
-      </div>
+              <div class="home-provider-avatar">
+                <%= provider.business_name.to_s.first.upcase %>
+              </div>
+
+              <div class="home-provider-content">
+                <h3><%= provider.business_name %></h3>
+
+                <p>
+                  <%= service&.service_category&.name || "Service Provider" %>
+                </p>
+
+                <div class="home-provider-meta">
+                  <span>
+                    <%= pluralize(
+                          provider.experience_years,
+                          "year"
+                        ) %> experience
+                  </span>
+
+                  <strong>
+                    PKR <%= number_with_delimiter(provider.hourly_rate) %>/hr
+                  </strong>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="home-empty-state">
+          <h3>No providers available yet</h3>
+
+          <p>
+            Approved service providers will appear here.
+          </p>
+        </div>
+      <% end %>
     </div>
   </section>
 
   <section class="home-section home-how-it-works">
     <div class="home-container">
       <div class="home-section-heading">
-        <span class="home-eyebrow">Simple process</span>
-        <h2>How Service Connect works</h2>
-        <p>Getting professional help should be simple.</p>
+        <h2>How It Works</h2>
+
+        <p>
+          Finding and booking a service provider is simple.
+        </p>
       </div>
 
       <div class="home-steps">
         <div class="home-step">
-          <span>01</span>
+          <span>1</span>
+
           <div>
-            <h3>Choose a service</h3>
-            <p>Select the category that matches your needs.</p>
+            <h3>Choose a Service</h3>
+
+            <p>
+              Select the service category that matches your needs.
+            </p>
           </div>
         </div>
 
         <div class="home-step">
-          <span>02</span>
+          <span>2</span>
+
           <div>
-            <h3>Find a provider</h3>
-            <p>Compare professionals, experience, ratings, and prices.</p>
+            <h3>Find a Provider</h3>
+
+            <p>
+              Browse providers and compare their experience and prices.
+            </p>
           </div>
         </div>
 
         <div class="home-step">
-          <span>03</span>
+          <span>3</span>
+
           <div>
-            <h3>Book your service</h3>
-            <p>Choose a suitable time and submit your booking request.</p>
+            <h3>Book the Service</h3>
+
+            <p>
+              Choose a suitable time and submit your booking request.
+            </p>
           </div>
         </div>
 
         <div class="home-step">
-          <span>04</span>
+          <span>4</span>
+
           <div>
-            <h3>Get it done</h3>
-            <p>Track the booking from acceptance through completion.</p>
+            <h3>Complete the Work</h3>
+
+            <p>
+              Follow the booking process until the service is completed.
+            </p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-section home-testimonial">
-    <div class="home-container">
-      <div class="home-testimonial-card">
-        <div class="home-quote-mark">“</div>
-        <div>
-          <span class="home-eyebrow">Customer experience</span>
-          <blockquote>
-            Excellent service. The provider was professional and completed the
-            electrical work successfully.
-          </blockquote>
-          <div class="home-testimonial-author">
-            <span class="home-testimonial-avatar">A</span>
-            <div>
-              <strong>Abdullah Johar</strong>
-              <span>Verified customer</span>
-            </div>
-            <span class="home-rating">★★★★★</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="home-cta">
-    <div class="home-container">
-      <div class="home-cta-content">
-        <div>
-          <span class="home-eyebrow">Ready to get started?</span>
-          <h2>Find the right professional for your next job.</h2>
-          <p>Browse trusted providers and make your booking today.</p>
-        </div>
-
-        <div class="home-hero-actions">
-          <%= link_to "Browse Providers", providers_path, class: "home-primary-button home-primary-button-light" %>
-          <%= link_to "Explore Services", "#services", class: "home-secondary-button home-secondary-button-light" %>
         </div>
       </div>
     </div>
