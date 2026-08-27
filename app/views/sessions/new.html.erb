@@ -20,16 +20,14 @@
 
         <%= form.email_field :email,
               required: true,
-              autofocus: true,
-              placeholder: "you@example.com" %>
+              autofocus: true %>
       </div>
 
       <div class="form-group">
         <%= form.label :password %>
 
         <%= form.password_field :password,
-              required: true,
-              placeholder: "Your password" %>
+              required: true %>
       </div>
 
       <%= form.submit "Log In", class: "auth-button" %>
