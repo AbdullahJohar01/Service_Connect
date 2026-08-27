@@ -105,16 +105,13 @@ end
 
 # ------------------------------------------------------------
 # Provider data
-#
-# 25 marketplace providers:
+# ------------------------------------------------------------
+# 25 providers:
 # 5 Electrical
 # 5 Plumbing
 # 5 Cleaning
 # 5 Painting
 # 5 Carpentry
-#
-# Ali Electrical Services is preserved.
-# ------------------------------------------------------------
 
 provider_definitions = [
   # Electrical
