@@ -1,12 +1,6 @@
 password = "DemoPass123!"
 
-# ============================================================
-# ServiceConnect Final Demo Seed Data
-# ============================================================
-
-# ------------------------------------------------------------
 # Admin
-# ------------------------------------------------------------
 
 admin = User.find_or_initialize_by(email: "admin@serviceconnect.test")
 admin.assign_attributes(
@@ -20,9 +14,8 @@ admin.assign_attributes(
 )
 admin.save!
 
-# ------------------------------------------------------------
+
 # Service Categories
-# ------------------------------------------------------------
 
 category_names = %w[
   Electrical
@@ -43,9 +36,8 @@ categories.each_value do |category|
   category.update!(active: true)
 end
 
-# ------------------------------------------------------------
+
 # Customers
-# ------------------------------------------------------------
 
 customers = 5.times.map do |index|
   user = User.find_or_initialize_by(
@@ -103,9 +95,8 @@ if abdullah
   address.save!
 end
 
-# ------------------------------------------------------------
+
 # Provider data
-# ------------------------------------------------------------
 # 25 providers:
 # 5 Electrical
 # 5 Plumbing
@@ -417,12 +408,8 @@ providers = provider_definitions.map do |data|
   profile
 end
 
-# ------------------------------------------------------------
-# Separate edge-case provider
-#
-# Kept outside the 25 marketplace providers.
-# Useful for demonstrating suspended/rejected authorization.
-# ------------------------------------------------------------
+
+# Demonstrating suspended/rejected authorization.
 
 edge_user = User.find_or_initialize_by(
   email: "suspended.provider@serviceconnect.test"
@@ -454,9 +441,8 @@ edge_profile.update!(
   approval_status: :rejected
 )
 
-# ------------------------------------------------------------
+
 # Demo bookings
-# ------------------------------------------------------------
 
 statuses = %i[
   pending
@@ -509,9 +495,8 @@ statuses = %i[
   )
 end
 
-# ------------------------------------------------------------
+
 # Abdullah reviews
-# ------------------------------------------------------------
 
 if abdullah
   review_providers = providers.first(2)
@@ -557,9 +542,8 @@ if abdullah
   end
 end
 
-# ------------------------------------------------------------
+
 # Demo messages and notifications
-# ------------------------------------------------------------
 
 Booking.completed.limit(10).each do |booking|
   Message.find_or_create_by!(
@@ -578,9 +562,7 @@ Booking.completed.limit(10).each do |booking|
   end
 end
 
-# ------------------------------------------------------------
 # Final seed summary
-# ------------------------------------------------------------
 
 puts
 puts "=============================================="
