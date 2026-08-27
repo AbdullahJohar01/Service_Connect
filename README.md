@@ -43,6 +43,10 @@ Endpoint:
 
 GraphQL supports queries and mutations for users, providers, bookings, reviews, messages, notifications, and other application data.
 
+## API Testing
+
+A Postman collection is included for testing the main REST and GraphQL endpoints.
+
 ## User Roles
 
 Customer — Find providers, create bookings, send messages, and leave reviews.

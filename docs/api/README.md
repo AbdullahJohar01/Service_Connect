@@ -1,42 +1,32 @@
-# ServiceConnect API Documentation
+# ServiceConnect API
 
-ServiceConnect exposes a versioned REST API and a GraphQL API.
+This directory contains documentation related to the ServiceConnect APIs.
 
 ## REST API
 
 Base path:
 
-`/api/v1`
+/api/v1
 
-Authentication:
+Protected endpoints use JWT authentication:
 
-`Authorization: Bearer <access_token>`
+Authorization: Bearer <access_token>
 
-The REST API provides authentication, providers, bookings, reviews, messaging,
-notifications, availability, provider services, service categories, addresses,
-customer profiles, provider profiles, profile images, and document uploads.
+The REST API includes authentication, providers, bookings, reviews, messages, notifications, and other application features.
 
 ## GraphQL API
 
 Endpoint:
 
-`POST /graphql`
+POST /graphql
 
-Development GraphiQL interface:
+GraphQL uses JWT authentication for protected requests.
 
-`/graphiql`
+In development, GraphiQL is available at:
 
-GraphQL uses the same JWT authentication mechanism as the REST API.
+/graphiql
 
-## API Tests
+## API Testing
 
-REST API tests:
+A Postman collection is included in the project for testing the main REST and GraphQL endpoints.
 
-`test/controllers/api/v1/`
-
-GraphQL controller tests:
-
-`test/controllers/graphql_controller_test.rb`
-
-The API documentation in this directory is maintained against the implemented
-Rails routes.
